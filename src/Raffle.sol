@@ -89,7 +89,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
         return (upkeepNeeded, "");
     }
 
-    function pickWinner() external {
+    function pickWinner(bytes calldata) external {
         uint256 playerLength = s_players.length;
 
         (bool upKeepNeeded, ) = checkUpKeep("");
@@ -141,7 +141,17 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     //Getters
-    function getEntranceFee() public view returns (uint256) {
+    function getEntranceFee() external view returns (uint256) {
         return i_entranceFee;
+    }
+
+    function getRaffleState() external view returns (RaffleState) {
+        return s_raffleState;
+    }
+
+    function getPlayers(
+        uint256 indexOffPlayer
+    ) external view returns (address) {
+        return s_players[indexOffPlayer];
     }
 }
